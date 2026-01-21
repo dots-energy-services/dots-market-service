@@ -1,62 +1,28 @@
 {
-    "name": "test",
-    "esdl_type" : "EConnection",
-    "description" : "this is a test description",
+    "name": "market service",
+    "esdl_type" : "EnergyMarket",
+    "description" : "a service that sends day ahead electricity prices",
     "relevant_links" : [
         {
-            "name" : "test link",
-            "url" : "https://example.com/test",
-            "description" : "this is a test link"
-        },
-        {
-            "name" : "another test link",
-            "url" : "https://example.com/anothertest",
-            "description" : "this is another link"
+            "name" : "EnergyMarket",
+            "url" : "https://energytransition.github.io/#router/doc-content/687474703a2f2f7777772e746e6f2e6e6c2f6573646c/EnergyMarket.html",
+            "description" : "Details on the energy market type in ESDL"
         }
     ],
     "calculations" : [
         {
-            "name": "test calculation",
+            "name": "send_current_day_ahead_price",
             "description" : "test",
             "time_period_in_seconds" : 900,
             "offset_in_seconds" : 0,
             "inputs" : [
-                {
-                    "name" : "input1",
-                    "esdl_type" : "PVInstallation",
-                    "data_type" : "DOUBLE",
-                    "description" : "input 1 description",
-                    "unit" : "K"
-                }
             ],
             "outputs" : [
                 {
-                    "name" : "output1",
+                    "name" : "day_ahead_price",
                     "data_type" : "DOUBLE",
-                    "description" : "output 1 description",
-                    "unit" : "W"
-                },
-                {
-                    "name" : "output2",
-                    "data_type" : "DOUBLE",
-                    "description" : "output 2 description",
-                    "unit" : "W"
-                }
-            ]
-        },
-        {
-            "name": "test calculation 2",
-            "description" : "test",
-            "time_period_in_seconds" : 900,
-            "offset_in_seconds" : 100,
-            "inputs" : [
-            ],
-            "outputs" : [
-                {
-                    "name" : "output3",
-                    "data_type" : "DOUBLE",
-                    "description" : "output 3 description",
-                    "unit" : "W"
+                    "description" : "The day ahead electricity prices for the coming 15 minutes in euros per MWh",
+                    "unit" : "EURO/KWh"
                 }
             ]
         }
