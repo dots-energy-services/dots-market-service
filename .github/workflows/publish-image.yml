@@ -10,7 +10,7 @@ on:
       - v*
   pull_request:
 env:
-  IMAGE_NAME: MarketService
+  IMAGE_NAME: marketservice
 jobs:
   push:
     runs-on: ubuntu-latest
