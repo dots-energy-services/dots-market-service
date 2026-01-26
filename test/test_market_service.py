@@ -1,8 +1,8 @@
 from datetime import datetime
 import unittest
 from MarketService.market_service import MarketService
-from MarketService.market_service_dataclasses import SendCurrentDayAheadPriceOutput
 from dots_infrastructure.DataClasses import SimulatorConfiguration, TimeStepInformation
+from dots_infrastructure.test_infra.InfluxDBMock import InfluxDBMock
 from esdl.esdl_handler import EnergySystemHandler
 import helics as h
 
@@ -28,6 +28,7 @@ class Test(unittest.TestCase):
         # Arrange
         service = MarketService()
         service.init_calculation_service(self.energy_system)
+        service.influx_connector = InfluxDBMock()
 
         # Execute
         ret_val = service.send_current_day_ahead_price({}, datetime(2020,8,11,0,0), TimeStepInformation(1,2), TEST_ID, self.energy_system)

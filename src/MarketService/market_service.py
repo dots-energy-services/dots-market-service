@@ -40,6 +40,7 @@ class MarketService(MarketServiceBase):
         to_date_time = simulation_time + timedelta(seconds=self.send_current_day_ahead_price_period_seconds - 1)
         day_ahead_price = self.market_prices[esdl_id][
                                       simulation_time:to_date_time]["value"].tolist()[0]
+        self.influx_connector.set_time_step_data_point(esdl_id, "current_pv_power_production", simulation_time, day_ahead_price)
         return SendCurrentDayAheadPriceOutput(day_ahead_price=day_ahead_price)
 
 if __name__ == "__main__":
