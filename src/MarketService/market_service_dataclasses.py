@@ -5,3 +5,7 @@ from typing import List
 class SendCurrentDayAheadPriceOutput:
     day_ahead_price : float | None = None
 
+@dataclass
+class SendDayAheadPriceComing12HoursOutput:
+    day_ahead_prices : float | None = None
+

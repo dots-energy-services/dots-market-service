@@ -24,7 +24,7 @@ class MarketServiceBase(HelicsSimulationExecutor):
             PublicationDescription(global_flag=True, 
                                     esdl_type="EnergyMarket",
                                     output_name="day_ahead_price",
-                                    output_unit="EURO/KWh", 
+                                    output_unit="EURO/MWh", 
                                     data_type=h.HelicsDataType.DOUBLE),
         ]
         send_current_day_ahead_price_information = HelicsCalculationInformation(
@@ -39,6 +39,31 @@ class MarketServiceBase(HelicsSimulationExecutor):
             calculation_function=self.send_current_day_ahead_price
         )
         self.add_calculation(send_current_day_ahead_price_information)
+        # Calculation: send_day_ahead_price_coming_12_hours
+        self.send_day_ahead_price_coming_12_hours_period_seconds = 900
+        send_day_ahead_price_coming_12_hours_inputs = [
+        
+        ]
+        send_day_ahead_price_coming_12_hours_outputs = [
+        
+            PublicationDescription(global_flag=True, 
+                                    esdl_type="EnergyMarket",
+                                    output_name="day_ahead_prices",
+                                    output_unit="EURO/MWh", 
+                                    data_type=h.HelicsDataType.DOUBLE),
+        ]
+        send_day_ahead_price_coming_12_hours_information = HelicsCalculationInformation(
+            time_period_in_seconds=900,
+            offset=0, 
+            uninterruptible=False, 
+            wait_for_current_time_update=False, 
+            terminate_on_error=True, 
+            calculation_name="send_day_ahead_price_coming_12_hours", 
+            inputs=send_day_ahead_price_coming_12_hours_inputs, 
+            outputs=send_day_ahead_price_coming_12_hours_outputs, 
+            calculation_function=self.send_day_ahead_price_coming_12_hours
+        )
+        self.add_calculation(send_day_ahead_price_coming_12_hours_information)
 
     def init_calculation_service(self, energy_system: EnergySystem):
         all_esdl_objs = EsdlHelperFunctions.get_all_esdl_objects_from_type(energy_system.eAllContents(), EnergyMarket)
@@ -48,5 +73,8 @@ class MarketServiceBase(HelicsSimulationExecutor):
 
     
     def send_current_day_ahead_price(self, param_dict : dict, simulation_time : datetime, time_step_number : TimeStepInformation, esdl_id : EsdlId, energy_system : EnergySystem):
+        pass
+    
+    def send_day_ahead_price_coming_12_hours(self, param_dict : dict, simulation_time : datetime, time_step_number : TimeStepInformation, esdl_id : EsdlId, energy_system : EnergySystem):
         pass
     

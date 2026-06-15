@@ -38,5 +38,19 @@ class Test(unittest.TestCase):
 
         self.assertEqual(ret_val.day_ahead_price, expected_outcome_price)
 
+    def test_send_current_day_ahead_price(self):
+        # Arrange
+        service = MarketService()
+        service.init_calculation_service(self.energy_system)
+        service.influx_connector = InfluxDBMock()
+
+        # Execute
+        ret_val = service.send_day_ahead_price_coming_12_hours({}, datetime(2020,8,11,0,0), TimeStepInformation(1,2), TEST_ID, self.energy_system)
+        
+        # Assert
+        expected_outcome_price = 0.10354000000000001
+
+        self.assertEqual(ret_val.day_ahead_price, expected_outcome_price)
+
 if __name__ == '__main__':
     unittest.main()
