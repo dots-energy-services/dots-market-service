@@ -1,12 +1,10 @@
 from datetime import datetime, timedelta
-import helics as h
 from dots_infrastructure.DataClasses import TimeStepInformation, EsdlId
-from esdl import EnergyMarket, EnergySystem, DateTimeProfile, StaticProfile
-import pandas as pd
+from dots_infrastructure.EsdlProfileParsingClasses import ParsedDateTimeProfile, ParsedTimeSeriesProfile, convert_parsed_datetime_profile_to_time_series_profile
+from esdl import EnergyMarket, EnergySystem, DateTimeProfile, StaticProfile, TimeSeriesProfile
 
 from MarketService.market_service_base import MarketServiceBase
 from MarketService.market_service_dataclasses import SendCurrentDayAheadPriceOutput, SendDayAheadPriceComing12HoursOutput
-from MarketService.profileclasses import ParsedDateTimeProfile, ParsedTimeSeriesProfile, ParsedStaticProfile
 
 class MarketService(MarketServiceBase): 
 
@@ -20,20 +18,22 @@ class MarketService(MarketServiceBase):
 
     def init_calculation_service(self, energy_system: EnergySystem):
         super().init_calculation_service(energy_system)
-        self.market_prices: dict[EsdlId, ParsedStaticProfile] = {}
+        self.market_prices: dict[EsdlId, ParsedTimeSeriesProfile] = {}
         for esdl_id in self.simulator_configuration.esdl_ids:
             da_market : EnergyMarket = self.esdl_obj_mapping[esdl_id]
             price_profile = da_market.marketPrice
-            self.market_prices[esdl_id] = self.parse_profile(price_profile)
-
+            new_parsed_profile = self.parse_profile(price_profile)
+            if isinstance(new_parsed_profile, ParsedDateTimeProfile):
+                new_parsed_profile = convert_parsed_datetime_profile_to_time_series_profile(new_parsed_profile)
+            self.market_prices[esdl_id] = new_parsed_profile
 
     def send_current_day_ahead_price(self, param_dict : dict, simulation_time : datetime, time_step_number : TimeStepInformation, esdl_id : EsdlId, energy_system : EnergySystem):
         to_date_time = simulation_time + timedelta(seconds=self.send_current_day_ahead_price_period_seconds - 1)
-        day_ahead_price = self.market_prices[esdl_id].get_data(simulation_time, to_date_time)
+        day_ahead_price = self.market_prices[esdl_id].get_data(simulation_time, to_date_time)[0]
         return SendCurrentDayAheadPriceOutput(day_ahead_price=day_ahead_price)
     
     def send_day_ahead_price_coming_12_hours(self, param_dict : dict, simulation_time : datetime, time_step_number : TimeStepInformation, esdl_id : EsdlId, energy_system : EnergySystem):
-        to_date_time = simulation_time + timedelta(seconds=self.send_day_ahead_price_coming_12_hours_period_seconds * 48 - 1)
+        to_date_time = simulation_time + timedelta(seconds=self.send_day_ahead_price_coming_12_hours_period_seconds * 48)
         day_ahead_prices = self.market_prices[esdl_id].get_data_in_timeseries_format(simulation_time, to_date_time, 900)
         return SendDayAheadPriceComing12HoursOutput(day_ahead_prices=day_ahead_prices)
 
