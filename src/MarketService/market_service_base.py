@@ -50,7 +50,7 @@ class MarketServiceBase(HelicsSimulationExecutor):
                                     esdl_type="EnergyMarket",
                                     output_name="day_ahead_prices",
                                     output_unit="EURO/MWh", 
-                                    data_type=h.HelicsDataType.DOUBLE),
+                                    data_type=h.HelicsDataType.VECTOR),
         ]
         send_day_ahead_price_coming_12_hours_information = HelicsCalculationInformation(
             time_period_in_seconds=900,

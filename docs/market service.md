@@ -19,7 +19,7 @@ test
 #### Output values
 |Name             |data_type             |unit             |description             |
 |-----------------|----------------------|-----------------|------------------------|
-|day_ahead_prices|DOUBLE|EURO/MWh|The day ahead electricity price every 15 minutes for the coming 12 hours|
+|day_ahead_prices|VECTOR|EURO/MWh|The day ahead electricity price every 15 minutes for the coming 12 hours|
 
 ### Relevant links
 |Link             |description             |

@@ -7,5 +7,5 @@ class SendCurrentDayAheadPriceOutput:
 
 @dataclass
 class SendDayAheadPriceComing12HoursOutput:
-    day_ahead_prices : float | None = None
+    day_ahead_prices : List | None = None
 

@@ -36,7 +36,7 @@
             "outputs" : [
                 {
                     "name" : "day_ahead_prices",
-                    "data_type" : "DOUBLE",
+                    "data_type" : "VECTOR",
                     "description" : "The day ahead electricity price every 15 minutes for the coming 12 hours",
                     "unit" : "EURO/MWh"
                 }
