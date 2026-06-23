@@ -30,6 +30,7 @@ class MarketService(MarketServiceBase):
     def send_current_day_ahead_price(self, param_dict : dict, simulation_time : datetime, time_step_number : TimeStepInformation, esdl_id : EsdlId, energy_system : EnergySystem):
         to_date_time = simulation_time + timedelta(seconds=self.send_current_day_ahead_price_period_seconds - 1)
         day_ahead_price = self.market_prices[esdl_id].get_data(simulation_time, to_date_time)[0]
+        self.influx_connector.set_time_step_data_point(esdl_id, "day_ahead_price", simulation_time, day_ahead_price)
         return SendCurrentDayAheadPriceOutput(day_ahead_price=day_ahead_price)
     
     def send_day_ahead_price_coming_12_hours(self, param_dict : dict, simulation_time : datetime, time_step_number : TimeStepInformation, esdl_id : EsdlId, energy_system : EnergySystem):
