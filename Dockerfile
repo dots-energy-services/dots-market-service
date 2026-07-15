@@ -6,6 +6,6 @@ WORKDIR /app
 COPY src/MarketService src/MarketService
 COPY pyproject.toml ./
 COPY README.md ./
-RUN pip install ./ --extra-index-url https://test.pypi.org/simple/
+RUN pip install ./
 
 ENTRYPOINT ["python3", "src/MarketService/market_service.py"]
