@@ -22,7 +22,23 @@
                     "name" : "day_ahead_price",
                     "data_type" : "DOUBLE",
                     "description" : "The day ahead electricity prices for the coming 15 minutes in euros per MWh",
-                    "unit" : "EURO/KWh"
+                    "unit" : "EURO/MWh"
+                }
+            ]
+        },
+        {
+            "name": "send_day_ahead_price_coming_12_hours",
+            "description" : "test",
+            "time_period_in_seconds" : 900,
+            "offset_in_seconds" : 0,
+            "inputs" : [
+            ],
+            "outputs" : [
+                {
+                    "name" : "day_ahead_prices",
+                    "data_type" : "VECTOR",
+                    "description" : "The day ahead electricity price every 15 minutes for the coming 12 hours",
+                    "unit" : "EURO/MWh"
                 }
             ]
         }

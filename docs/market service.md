@@ -12,7 +12,14 @@ test
 #### Output values
 |Name             |data_type             |unit             |description             |
 |-----------------|----------------------|-----------------|------------------------|
-|day_ahead_price|DOUBLE|EURO/KWh|The day ahead electricity prices for the coming 15 minutes in euros per MWh|
+|day_ahead_price|DOUBLE|EURO/MWh|The day ahead electricity prices for the coming 15 minutes in euros per MWh|
+### send_day_ahead_price_coming_12_hours 
+
+test
+#### Output values
+|Name             |data_type             |unit             |description             |
+|-----------------|----------------------|-----------------|------------------------|
+|day_ahead_prices|VECTOR|EURO/MWh|The day ahead electricity price every 15 minutes for the coming 12 hours|
 
 ### Relevant links
 |Link             |description             |
